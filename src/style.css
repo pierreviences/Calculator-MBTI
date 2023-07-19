@@ -13,6 +13,37 @@ body {
     margin: 0 auto;
 }
 
+.kotak {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #F2F3F5;
+    border-radius: 5px;
+}
+
+.kotak.hasil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.kotak p {
+    margin-top: 20px;
+}
+
+.teks {
+    font-size: 20px;
+}
+
+.teksKategori {
+    margin-bottom: 30px;
+}
+
+.teksBMI {
+    font-size: 35px;
+    color: black;
+}
+
 form {
     margin: 20px 0;
     padding: 20px;
@@ -100,4 +131,8 @@ label {
 
 .btn-secondary:hover {
     background-color: #5a6268;
+}
+
+.hidden {
+    display: none;
 }
