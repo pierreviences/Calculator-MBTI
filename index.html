@@ -77,7 +77,13 @@
 
 
     <script>
-
+        const calculateBMI = () => {
+            const beratBadan = parseFloat(document.getElementById("beratBadan").value);
+            const tinggiBadan = parseFloat(document.getElementById("tinggiBadan").value) / 100;
+            const bmi = beratBadan / (tinggiBadan * tinggiBadan);
+            const hasilBMI = bmi.toFixed(2);
+            document.getElementById("hasilBMI").textContent = hasilBMI;
+        };
         const validateForm = () => {
             const jenisKelaminValue = document.getElementsByName("jenisKelamin");
             let jenisKelamin;
@@ -112,7 +118,32 @@
             return true;
         };
 
+        const homeSection = document.getElementById('home');
+        const resultSection = document.getElementById('result');
+        const calculateButton = document.querySelector('#home button[type="submit"]');
+        const backButton = document.querySelector('#result button[type="button"]');
 
+        const showResultSection = () => {
+            homeSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+        };
+
+        const showHomeSection = () => {
+            resultSection.classList.add('hidden');
+            homeSection.classList.remove('hidden');
+        };
+
+        calculateButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (validateForm()) {
+                calculateBMI();
+            }
+        });
+
+        backButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            showHomeSection();
+        });
     </script>
 
 </body>
