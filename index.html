@@ -161,6 +161,47 @@
         };
 
 
+        const showResultSection = () => {
+            homeSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+        };
+
+        const showHomeSection = () => {
+            resultSection.classList.add('hidden');
+            homeSection.classList.remove('hidden');
+            document.getElementById("myForm").reset();
+        };
+
+        backButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            showHomeSection();
+        });
+
+        const resetForm = () => {
+            document.getElementById("myForm").reset();
+        };
+
+        calculateButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const gender = getGender();
+            const weight = document.getElementById("beratBadan").value;
+            const age = document.getElementById("usia").value;
+            const height = document.getElementById("tinggiBadan").value;
+            if (validateInputForm(gender, weight, age, height)) {
+                calculateBMI(weight, height, displayResult);
+            }
+        });
+
+        const calculateBMI = (weight, height, result) => {
+            const convertedWeight = parseFloat(weight);
+            const convertedHeight = parseFloat(height) / 100;
+            const bmi = convertedWeight / (convertedHeight * convertedHeight);
+            const formattedBMI = bmi.toFixed(2);
+            const category = getCategory(bmi);
+            const statusCategory = getStatusCategory(category);
+            const { minBmi, maxBmi } = getBmiRange(category);
+            result(formattedBMI, category, statusCategory, minBmi, maxBmi);
+        };
 
     </script>
 
