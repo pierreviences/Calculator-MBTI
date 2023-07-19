@@ -203,6 +203,56 @@
             result(formattedBMI, category, statusCategory, minBmi, maxBmi);
         };
 
+
+
+        const displayResult = (formattedBMI, category, statusCategory, minBmi, maxBmi) => {
+            setTextContent("hasilBMI", formattedBMI);
+            setTextContent("kategori", category);
+            setTextContent("kategoriTubuh", `Beberapa resiko penyakit yang berasal dari tubuh ${category}`);
+            setTextContent("statusKategori", statusCategory);
+            setTextContent("saran", suggestion[category]);
+            setTextContent("nasihat", advice[category]);
+            if (isFinite(minBmi)) {
+                if (isFinite(maxBmi)) {
+                    setTextContent("antaraBMI", `Hasil BMI diantara ${minBmi} dan ${maxBmi}`);
+                } else {
+                    setTextContent("antaraBMI", `Hasil BMI diantara ${minBmi} - ?`);
+                }
+            } else if (isFinite(maxBmi)) {
+                setTextContent("antaraBMI", `Hasil BMI diantara ? - ${maxBmi}`);
+            } else {
+                setTextContent("antaraBMI", "Hasil BMI diantara -");
+            }
+            displayDiseases(category);
+        };
+
+        const setTextContent = (elementId, value) => {
+            document.getElementById(elementId).textContent = value;
+        };
+
+
+
+
+        const validateInputForm = (gender, weight, age, height) => {
+            if (typeof gender === 'undefined') {
+                alert("Harap pilih jenis kelamin!");
+                return false;
+            }
+            if (weight === "" || age === "" || height === "") {
+                alert("Harap isi semua inputan terlebih dahulu!");
+                return false;
+            }
+            if (isNaN(weight) || isNaN(age) || isNaN(height)) {
+                alert("Harap masukkan angka pada input berat badan, usia, dan tinggi badan!");
+                return false;
+            }
+            if (weight <= 0 || age <= 0 || height <= 0) {
+                alert("Harap masukkan angka di atas 0 pada input berat badan, usia, dan tinggi badan!");
+                return false;
+            }
+            showResultSection();
+            return true;
+        };
     </script>
 
 </body>
