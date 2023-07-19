@@ -231,6 +231,28 @@
         };
 
 
+
+        const getGender = () => {
+            const genderValues = document.getElementsByName("jenisKelamin");
+            let gender;
+            for (let i = 0; i < genderValues.length; i++) {
+                if (genderValues[i].checked) {
+                    gender = genderValues[i].value;
+                    break;
+                }
+            }
+            return gender;
+        };
+
+        const getBmiRange = (category) => {
+            const gender = getGender();
+            const genderCategories = bmiCategories[gender.toLowerCase()];
+            const index = categories.indexOf(category);
+            if (index !== -1) {
+                return genderCategories[index];
+            }
+            return { minBmi: '', maxBmi: '' };
+        };
         const getStatusCategory = (category) => {
             let statusCategory;
             const index = categories.indexOf(category);
