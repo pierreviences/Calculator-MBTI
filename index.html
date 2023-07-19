@@ -232,6 +232,18 @@
 
 
 
+        const getCategory = (bmi) => {
+            const gender = getGender();
+            let category;
+            const genderCategories = bmiCategories[gender.toLowerCase()];
+            for (let i = 0; i < genderCategories.length; i++) {
+                if (bmi >= genderCategories[i].minBmi && bmi <= genderCategories[i].maxBmi) {
+                    category = categories[i];
+                    break;
+                }
+            }
+            return category;
+        };
 
         const validateInputForm = (gender, weight, age, height) => {
             if (typeof gender === 'undefined') {
