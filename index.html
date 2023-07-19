@@ -78,6 +78,40 @@
 
     <script>
 
+        const validateForm = () => {
+            const jenisKelaminValue = document.getElementsByName("jenisKelamin");
+            let jenisKelamin;
+            for (let i = 0; i < jenisKelaminValue.length; i++) {
+                if (jenisKelaminValue[i].checked) {
+                    jenisKelamin = jenisKelaminValue[i].value;
+                    break;
+                }
+            }
+            const beratBadan = document.getElementById("beratBadan").value;
+            const usia = document.getElementById("usia").value;
+            const tinggiBadan = document.getElementById("tinggiBadan").value;
+
+            if (jenisKelamin === "") {
+                alert("Harap pilih jenis kelamin!");
+                return false;
+            }
+            if (beratBadan === "" || usia === "" || tinggiBadan === "") {
+                alert("Harap isi semua inputan terlebih dahulu!");
+                return false;
+            }
+            if (isNaN(beratBadan) || isNaN(usia) || isNaN(tinggiBadan)) {
+                alert("Harap masukkan angka pada input berat badan, usia, dan tinggi badan!");
+                return false;
+            }
+            if (beratBadan <= 0 || usia <= 0 || tinggiBadan <= 0) {
+                alert("Harap masukkan angka di atas 0 pada input berat badan, usia, dan tinggi badan!");
+                return false;
+            }
+
+            showResultSection();
+            return true;
+        };
+
 
     </script>
 
