@@ -231,6 +231,14 @@
         };
 
 
+        const getStatusCategory = (category) => {
+            let statusCategory;
+            const index = categories.indexOf(category);
+            if (index !== -1) {
+                statusCategory = statuses[index];
+            }
+            return statusCategory;
+        };
 
         const getCategory = (bmi) => {
             const gender = getGender();
