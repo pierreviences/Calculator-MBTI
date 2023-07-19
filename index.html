@@ -230,6 +230,23 @@
             document.getElementById(elementId).textContent = value;
         };
 
+        const displayDiseases = (category) => {
+            const diseaseList = diseases[category];
+            const diseaseElement = document.getElementById("penyakit");
+            diseaseElement.innerHTML = "";
+
+            if (diseaseList.length > 0) {
+                diseaseList.forEach((disease) => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = disease;
+                    diseaseElement.appendChild(listItem);
+                });
+            } else {
+                const listItem = document.createElement("li");
+                listItem.textContent = "Tidak ada penyakit yang terkait dengan kategori ini.";
+                diseaseElement.appendChild(listItem);
+            }
+        };
 
 
         const getGender = () => {
