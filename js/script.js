@@ -1,13 +1,13 @@
-
-
 // deklarasi
 const homeSection = document.getElementById('home');
 const resultSection = document.getElementById('result');
 const calculateButton = document.querySelector('#home button[type="submit"]');
 const backButton = document.querySelector('#result button[type="button"]');
 
-
+// Daftar kategori berdasarkan BMI
 const categories = ["Kekurangan Berat Badan", "Normal", "Kelebihan Berat Badan", "Kegemukan (Obesitas)"];
+
+// Rentang BMI berdasarkan jenis kelamin
 const bmiCategories = {
     pria: [
         { minBmi: -Infinity, maxBmi: 18.4 },
@@ -22,6 +22,8 @@ const bmiCategories = {
         { minBmi: 28, maxBmi: Infinity }
     ]
 };
+
+// Status kategori berdasarkan BMI
 const statuses = [
     "Anda memiliki berat badan kurang dari normal.",
     "Anda memiliki berat badan dalam kisaran normal.",
@@ -29,6 +31,7 @@ const statuses = [
     "Anda memiliki berat badan dalam kategori kegemukan (obesitas)."
 ];
 
+// Saran berdasarkan kategori BMI
 const suggestion = {
     [categories[0]]: "Jika BMI Anda berada dalam kategori ini maka Anda dianjurkan untuk menambah berat badan hingga batas normal.",
     [categories[1]]: "Jika BMI Anda berada dalam kategori ini maka Anda memiliki berat badan yang sehat.",
@@ -36,6 +39,7 @@ const suggestion = {
     [categories[3]]: "Jika BMI Anda berada dalam kategori ini maka Anda dianjurkan untuk mengurangi berat badan hingga batas normal."
 };
 
+// Nasihat berdasarkan kategori BMI
 const advice = {
     [categories[0]]: "Perbanyak asupan makanan bergizi dan konsultasikan dengan ahli gizi untuk peningkatan berat badan.",
     [categories[1]]: "Lanjutkan gaya hidup sehat dengan pola makan seimbang dan olahraga teratur.",
@@ -43,6 +47,7 @@ const advice = {
     [categories[3]]: "Segera konsultasikan dengan ahli gizi untuk penurunan berat badan yang sehat."
 };
 
+// Penyakit yang berhubungan dengan kategori BMI
 const diseases = {
     "Kekurangan Berat Badan": ['Anemia', 'Osteoporosis', 'Gangguan pertumbuhan', 'Gangguan reproduksi'],
     "Normal": ['Tidak ada'],
@@ -50,27 +55,31 @@ const diseases = {
     "Kegemukan (Obesitas)": ['Stroke', 'Diabetes melitus', 'Kanker', 'Gangguan pernapasan', 'Gangguan reproduksi']
 };
 
-
+// Menampilkan bagian hasil pada halaman
 const showResultSection = () => {
     homeSection.classList.add('hidden');
     resultSection.classList.remove('hidden');
 };
 
+// Menampilkan bagian beranda pada halaman
 const showHomeSection = () => {
     resultSection.classList.add('hidden');
     homeSection.classList.remove('hidden');
     document.getElementById("myForm").reset();
 };
 
+// Tombol kembali pada bagian hasil
 backButton.addEventListener('click', (event) => {
     event.preventDefault();
     showHomeSection();
 });
 
+// Fungsi untuk mereset form input
 const resetForm = () => {
     document.getElementById("myForm").reset();
 };
 
+// Event listener saat tombol "Hitung MBI" ditekan
 calculateButton.addEventListener('click', (event) => {
     event.preventDefault();
     const gender = getGender();
@@ -82,6 +91,7 @@ calculateButton.addEventListener('click', (event) => {
     }
 });
 
+// Menghitung nilai BMI
 const calculateBMI = (weight, height, result) => {
     const convertedWeight = parseFloat(weight);
     const convertedHeight = parseFloat(height) / 100;
@@ -93,8 +103,7 @@ const calculateBMI = (weight, height, result) => {
     result(formattedBMI, category, statusCategory, minBmi, maxBmi);
 };
 
-
-
+// Menampilkan hasil perhitungan BMI pada halaman
 const displayResult = (formattedBMI, category, statusCategory, minBmi, maxBmi) => {
     setTextContent("hasilBMI", formattedBMI);
     setTextContent("kategori", category);
@@ -116,10 +125,12 @@ const displayResult = (formattedBMI, category, statusCategory, minBmi, maxBmi) =
     displayDiseases(category);
 };
 
+// Mengatur teks konten pada elemen dengan ID yang diberikan
 const setTextContent = (elementId, value) => {
     document.getElementById(elementId).textContent = value;
 };
 
+// Menampilkan daftar penyakit yang berhubungan dengan kategori BMI pada halaman
 const displayDiseases = (category) => {
     const diseaseList = diseases[category];
     const diseaseElement = document.getElementById("penyakit");
@@ -138,7 +149,7 @@ const displayDiseases = (category) => {
     }
 };
 
-
+// Mendapatkan jenis kelamin yang dipilih
 const getGender = () => {
     const genderValues = document.getElementsByName("jenisKelamin");
     let gender;
@@ -151,6 +162,7 @@ const getGender = () => {
     return gender;
 };
 
+// Mendapatkan rentang BMI berdasarkan kategori
 const getBmiRange = (category) => {
     const gender = getGender();
     const genderCategories = bmiCategories[gender.toLowerCase()];
@@ -160,6 +172,8 @@ const getBmiRange = (category) => {
     }
     return { minBmi: '', maxBmi: '' };
 };
+
+// Mendapatkan status kategori berdasarkan BMI
 const getStatusCategory = (category) => {
     let statusCategory;
     const index = categories.indexOf(category);
@@ -169,6 +183,7 @@ const getStatusCategory = (category) => {
     return statusCategory;
 };
 
+// Mendapatkan kategori berdasarkan BMI
 const getCategory = (bmi) => {
     const gender = getGender();
     let category;
@@ -182,6 +197,7 @@ const getCategory = (bmi) => {
     return category;
 };
 
+// Validasi input form
 const validateInputForm = (gender, weight, age, height) => {
     if (typeof gender === 'undefined') {
         alert("Harap pilih jenis kelamin!");
