@@ -14,7 +14,7 @@
                 menunjang penampilan, berat badan ideal juga menandakan kondisi tubuh yang sehat. Bagaimana denganmu?
                 Yuk, hitung sekarang di kalkulator BMI.
             </p>
-            <form name="myForm">
+            <form name="myForm" id="myForm">
                 <div class="form-group">
                     <label for="jenisKelamin">Jenis Kelamin:</label>
                     <div class="form-check form-check-inline">
@@ -71,79 +71,97 @@
                 <p class="teksKategori" id="statusKategori">{status kategori}</p>
                 <button class="btn btn-primary">Donwload Hasil BMI</button>
             </div>
-            <button type="button" class="btn btn-primary">Kembali</button>
+            <p class="paragraph2" id="antaraBMI">
+                Hasil : {minBMi dan maxBMI}
+            </p>
+            <p class="paragraph4" id="saran">
+                {saran}
+            </p>
+            <p class="paragraph4" id="nasihat">
+                {saran2}
+            </p>
+            <div class="button-container">
+                <button class="btn btn-primary">Konsultasi Ahli Gizi Via Aplikasi</button>
+                <button class="btn btn-primary">Registrasi Online Ahli Gizi</button>
+            </div>
+            <p class="paragraph5" id="nasihat">
+                BMI tidak sepenuhnya mewakili diagnosis menyeluruh dari kesehatan tubuh dan resiko penyakit seseorang,
+                Anda perlu konsultasi lebih lanjut mengenai resiko dan kekhawatiran Anda terkait dengan berat badan
+                Anda.
+            </p>
+            <div class="kotak hasil">
+                <p class="teks" id="kategoriTubuh">Beberapa resiko penyakit yang berasal dari tubuh {kategori}</p>
+                <ul class="list" id="penyakit">
+                    <li>{penyakit}</li>
+                    <li>{penyakit}</li>
+                    <li>{penyakit}</li>
+                </ul>
+                <div class="button-container">
+                    <button class="btn btn-primary">Konsultasi Dokter Via Aplikasi</button>
+                    <button class="btn btn-primary">Registrasi Online Sekarang</button>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="reset" class="btn btn-primary" onclick="resetForm()">Kembali</button>
+            </div><br><br>
         </div>
     </section>
 
 
     <script>
-        const calculateBMI = () => {
-            const beratBadan = parseFloat(document.getElementById("beratBadan").value);
-            const tinggiBadan = parseFloat(document.getElementById("tinggiBadan").value) / 100;
-            const bmi = beratBadan / (tinggiBadan * tinggiBadan);
-            const hasilBMI = bmi.toFixed(2);
-            document.getElementById("hasilBMI").textContent = hasilBMI;
-        };
-        const validateForm = () => {
-            const jenisKelaminValue = document.getElementsByName("jenisKelamin");
-            let jenisKelamin;
-            for (let i = 0; i < jenisKelaminValue.length; i++) {
-                if (jenisKelaminValue[i].checked) {
-                    jenisKelamin = jenisKelaminValue[i].value;
-                    break;
-                }
-            }
-            const beratBadan = document.getElementById("beratBadan").value;
-            const usia = document.getElementById("usia").value;
-            const tinggiBadan = document.getElementById("tinggiBadan").value;
 
-            if (jenisKelamin === "") {
-                alert("Harap pilih jenis kelamin!");
-                return false;
-            }
-            if (beratBadan === "" || usia === "" || tinggiBadan === "") {
-                alert("Harap isi semua inputan terlebih dahulu!");
-                return false;
-            }
-            if (isNaN(beratBadan) || isNaN(usia) || isNaN(tinggiBadan)) {
-                alert("Harap masukkan angka pada input berat badan, usia, dan tinggi badan!");
-                return false;
-            }
-            if (beratBadan <= 0 || usia <= 0 || tinggiBadan <= 0) {
-                alert("Harap masukkan angka di atas 0 pada input berat badan, usia, dan tinggi badan!");
-                return false;
-            }
-
-            showResultSection();
-            return true;
-        };
-
+        // deklarasi
         const homeSection = document.getElementById('home');
         const resultSection = document.getElementById('result');
         const calculateButton = document.querySelector('#home button[type="submit"]');
         const backButton = document.querySelector('#result button[type="button"]');
 
-        const showResultSection = () => {
-            homeSection.classList.add('hidden');
-            resultSection.classList.remove('hidden');
+
+        const categories = ["Kekurangan Berat Badan", "Normal", "Kelebihan Berat Badan", "Kegemukan (Obesitas)"];
+        const bmiCategories = {
+            pria: [
+                { minBmi: -Infinity, maxBmi: 18.4 },
+                { minBmi: 18.5, maxBmi: 24.9 },
+                { minBmi: 25, maxBmi: 29.9 },
+                { minBmi: 30, maxBmi: Infinity }
+            ],
+            wanita: [
+                { minBmi: -Infinity, maxBmi: 16.9 },
+                { minBmi: 17, maxBmi: 23.9 },
+                { minBmi: 24, maxBmi: 27 },
+                { minBmi: 28, maxBmi: Infinity }
+            ]
+        };
+        const statuses = [
+            "Anda memiliki berat badan kurang dari normal.",
+            "Anda memiliki berat badan dalam kisaran normal.",
+            "Anda memiliki berat badan lebih dari normal.",
+            "Anda memiliki berat badan dalam kategori kegemukan (obesitas)."
+        ];
+
+        const suggestion = {
+            [categories[0]]: "Jika BMI Anda berada dalam kategori ini maka Anda dianjurkan untuk menambah berat badan hingga batas normal.",
+            [categories[1]]: "Jika BMI Anda berada dalam kategori ini maka Anda memiliki berat badan yang sehat.",
+            [categories[2]]: "Jika BMI Anda berada dalam kategori ini maka Anda dianjurkan untuk menurunkan berat badan hingga batas normal.",
+            [categories[3]]: "Jika BMI Anda berada dalam kategori ini maka Anda dianjurkan untuk mengurangi berat badan hingga batas normal."
         };
 
-        const showHomeSection = () => {
-            resultSection.classList.add('hidden');
-            homeSection.classList.remove('hidden');
+        const advice = {
+            [categories[0]]: "Perbanyak asupan makanan bergizi dan konsultasikan dengan ahli gizi untuk peningkatan berat badan.",
+            [categories[1]]: "Lanjutkan gaya hidup sehat dengan pola makan seimbang dan olahraga teratur.",
+            [categories[2]]: "Lakukan penyesuaian pola makan dan rutin berolahraga untuk menurunkan berat badan.",
+            [categories[3]]: "Segera konsultasikan dengan ahli gizi untuk penurunan berat badan yang sehat."
         };
 
-        calculateButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            if (validateForm()) {
-                calculateBMI();
-            }
-        });
+        const diseases = {
+            "Kekurangan Berat Badan": ['Anemia', 'Osteoporosis', 'Gangguan pertumbuhan', 'Gangguan reproduksi'],
+            "Normal": ['Tidak ada'],
+            "Kelebihan Berat Badan": ['Hipertensi', 'Kolesterol tinggi', 'Jantung koroner'],
+            "Kegemukan (Obesitas)": ['Stroke', 'Diabetes melitus', 'Kanker', 'Gangguan pernapasan', 'Gangguan reproduksi']
+        };
 
-        backButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            showHomeSection();
-        });
+
+
     </script>
 
 </body>

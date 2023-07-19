@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 850px;
     margin: 0 auto;
 }
 
@@ -108,7 +108,9 @@ label {
 }
 
 .paragraph,
-.paragraph2 {
+.paragraph2,
+.paragraph4,
+.paragraph5 {
     text-align: justify;
     line-height: 30px;
     color: #1f1e1e;
@@ -119,11 +121,32 @@ label {
     line-height: 20px;
 }
 
+.paragraph4 {
+    margin: 5px 0;
+    line-height: 20px;
+}
+
+.paragraph5 {
+    margin: 10px 0;
+    line-height: 22px;
+}
+
 .paragraph3 {
     line-height: 22px;
     margin-left: 20px;
 }
 
+.list li {
+    margin: 10px 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+
+.button-container {
+    margin: 10px 10px 0 0px;
+    display: inline-block;
+}
 
 .btn-primary:hover {
     background-color: #0069d9;
